@@ -3,6 +3,7 @@ import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -16,6 +17,7 @@ export default [
       '@next/next': nextPlugin,
       '@typescript-eslint': typescriptPlugin,
       prettier: prettierPlugin,
+      'react-hooks': reactHooksPlugin,
     },
     languageOptions: {
       parser: typescriptParser,
@@ -29,6 +31,8 @@ export default [
       ...typescriptPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
   {

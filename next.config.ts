@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  devIndicators: {
+    appIsrStatus: false,
+  },
+  sassOptions: {
+    prependData: `@use '@/styles/colors.scss';`,
+  },
 };
 
 export default nextConfig;
