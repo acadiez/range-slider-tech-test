@@ -1,19 +1,24 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { getRangeValue } from '../../helpers';
 
 interface UseRangeSliderProps {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
+  range?: number[];
 }
 
-export const useRangeSlider = ({ min, max }: UseRangeSliderProps) => {
-  const [value1, setValue1] = useState(min);
-  const [value2, setValue2] = useState(max);
+export const useRangeSlider = ({ min = 0, max = 100, range }: UseRangeSliderProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const defaultMin = useMemo(() => (Array.isArray(range) ? range[0] : min), [min, range]);
+  const defaultMax = useMemo(() => (Array.isArray(range) ? range[range.length - 1] : max), [max, range]);
+  const [value1, setValue1] = useState(defaultMin);
+  const [value2, setValue2] = useState(defaultMax);
 
   const handleChangeValue = useCallback(
     ({ index, value }: { index: number; value: number }) => {
-      const newValue = Math.min(Math.max(value, min), max);
+      const calculatedValue = Math.min(Math.max(value, defaultMin), defaultMax);
+      const newValue = getRangeValue(calculatedValue, range);
 
       if (index === 1) {
         setValue1(Math.min(newValue, value2));
@@ -21,7 +26,7 @@ export const useRangeSlider = ({ min, max }: UseRangeSliderProps) => {
         setValue2(Math.max(newValue, value1));
       }
     },
-    [max, min, value1, value2],
+    [defaultMax, defaultMin, range, value1, value2],
   );
 
   const handleMove = useCallback(
@@ -29,10 +34,12 @@ export const useRangeSlider = ({ min, max }: UseRangeSliderProps) => {
       if (!sliderRef.current) return;
 
       const sliderRect = sliderRef.current.getBoundingClientRect();
-      const value = Math.round(((e.clientX - sliderRect.left) / sliderRect.width) * (max - min) + min);
+      const value = Math.round(
+        ((e.clientX - sliderRect.left) / sliderRect.width) * (defaultMax - defaultMin) + defaultMin,
+      );
       handleChangeValue({ index, value });
     },
-    [handleChangeValue, max, min],
+    [handleChangeValue, defaultMax, defaultMin],
   );
 
   const handleMouseDown = useCallback(
@@ -54,7 +61,7 @@ export const useRangeSlider = ({ min, max }: UseRangeSliderProps) => {
   );
 
   return {
-    state: { value1, value2, sliderRef, isDragging },
+    state: { defaultMin, defaultMax, value1, value2, sliderRef, isDragging },
     methods: { handleMouseDown, handleChangeValue },
   };
 };

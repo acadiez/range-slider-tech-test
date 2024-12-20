@@ -3,24 +3,20 @@ import styles from './styles.module.scss';
 import { useRangeSlider } from './hooks';
 import { RangeLabel, Thumb, Track } from './components';
 import { RangeSliderContext } from './context';
-
-interface RangeSliderProps {
-  min: number;
-  max: number;
-}
+import { RangeSliderProps } from './types';
 
 const { sliderContainer, slider, dragging, labelsContainer } = styles;
 
-const RangeSlider = ({ min, max }: RangeSliderProps) => {
+const RangeSlider = ({ type = 'number', min, max, isEditable, range }: RangeSliderProps) => {
   const {
-    state: { value1, value2, sliderRef, isDragging },
+    state: { defaultMin, defaultMax, value1, value2, sliderRef, isDragging },
     methods: { handleMouseDown, handleChangeValue },
-  } = useRangeSlider({ min, max });
+  } = useRangeSlider({ min, max, range });
 
   const draggingClass = useMemo(() => (isDragging ? dragging : ''), [isDragging]);
 
   return (
-    <RangeSliderContext.Provider value={{ min, max, isDragging }}>
+    <RangeSliderContext.Provider value={{ type, min: defaultMin, max: defaultMax, isDragging }}>
       <div className={`${sliderContainer} ${draggingClass}`}>
         <div ref={sliderRef} className={slider}>
           <Thumb value={value1} handleMouseDown={(e) => handleMouseDown({ e, index: 1 })} />
@@ -30,7 +26,7 @@ const RangeSlider = ({ min, max }: RangeSliderProps) => {
         <div className={labelsContainer}>
           <RangeLabel
             value={value1}
-            isEditable
+            isEditable={!!isEditable}
             onChange={(value: number) => {
               handleChangeValue({ index: 1, value });
             }}
@@ -38,7 +34,7 @@ const RangeSlider = ({ min, max }: RangeSliderProps) => {
           <RangeLabel
             value={value2}
             position="right"
-            isEditable
+            isEditable={!!isEditable}
             onChange={(value: number) => {
               handleChangeValue({ index: 2, value });
             }}

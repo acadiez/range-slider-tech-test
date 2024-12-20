@@ -4,6 +4,7 @@ import { RangeLabelProps } from './types';
 import { useRangeLabel } from './hooks';
 import { InputNumber } from '@/ui';
 import { RangeSliderContext, RangeSliderContextType } from '../../context';
+import { rangeSliderTypes } from '../../types';
 
 const { rangeLabelContainer } = styles;
 
@@ -12,7 +13,7 @@ const RangeLabel = ({ value, isEditable, onChange, position = 'left' }: RangeLab
     state: { isEditing },
     methods: { handleChange, handleEdit },
   } = useRangeLabel({ onChange, isEditable });
-  const { max, min } = useContext(RangeSliderContext) as RangeSliderContextType;
+  const { type, max, min } = useContext(RangeSliderContext) as RangeSliderContextType;
 
   const leftStyle = useMemo(() => `${position === 'left' ? 0 : '100%'}`, [position]);
   const cursorStyle = useMemo(() => (!!isEditable ? 'pointer' : 'auto'), [isEditable]);
@@ -25,9 +26,12 @@ const RangeLabel = ({ value, isEditable, onChange, position = 'left' }: RangeLab
         cursor: cursorStyle,
       }}
     >
-      {(!isEditing && <p onClick={handleEdit}>{value}</p>) || (
-        <InputNumber value={value} max={max} min={min} onChange={handleChange} />
-      )}
+      {(!isEditing && (
+        <p onClick={handleEdit}>
+          {value}
+          {rangeSliderTypes?.[type]}
+        </p>
+      )) || <InputNumber value={value} max={max} min={min} onChange={handleChange} />}
     </div>
   );
 };
