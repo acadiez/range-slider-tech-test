@@ -1,0 +1,12 @@
+.inputNumber {
+  height: 32px;
+  width: 62px;
+  padding: 8px;
+  border: solid 1px colors.$primary;
+  border-radius: 8px;
+
+  &:focus {
+    outline: none;
+    border: solid 2px colors.$primary;
+  }
+}

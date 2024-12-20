@@ -1,0 +1,30 @@
+.mainButton {
+  height: 45px;
+  font-weight: 600;
+  border-radius: 45px;
+  padding: 0 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.contained {
+    border: 0;
+    color: colors.$main-white;
+    background-color: colors.$primary;
+
+    &:hover {
+      background-color: rgba(colors.$primary, 0.9);
+    }
+  }
+
+  &.outlined {
+    border: solid 1px colors.$primary;
+    color: colors.$primary;
+    background-color: colors.$main-white;
+
+    &:hover {
+      border: solid 2px colors.$primary;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.exercise1ViewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 64px;
+  width: 100vw;
+  height: fit-content;
+}
