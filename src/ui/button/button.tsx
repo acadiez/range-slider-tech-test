@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react';
 import styles from './styles.module.scss';
 
-interface ButtonProps {
+export interface ButtonProps {
   label: string;
   onClick: () => void;
   variant?: 'contained' | 'outlined';

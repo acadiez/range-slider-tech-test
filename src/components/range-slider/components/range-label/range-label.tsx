@@ -20,6 +20,7 @@ const RangeLabel = ({ value, isEditable, onChange, position = 'left' }: RangeLab
 
   return (
     <div
+      data-testid="range-label"
       className={rangeLabelContainer}
       style={{
         left: leftStyle,

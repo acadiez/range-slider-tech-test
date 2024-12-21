@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { Button } from '@/ui';
 import { useHomeSection } from './hooks';
 
-interface HomeSectionProps {
+export interface HomeSectionProps {
   title: string;
   action: string;
   redirect: string;
@@ -20,7 +20,7 @@ const HomeSection = ({ title, action, redirect, variant = 'primary' }: HomeSecti
   const buttonVariant = useMemo(() => (variant === 'primary' ? 'contained' : 'outlined'), [variant]);
 
   return (
-    <div className={homeSectionContainer}>
+    <div className={homeSectionContainer} data-testid="home-section">
       <h1>{title}</h1>
       <Button label={action} onClick={handleRedirect} variant={buttonVariant} />
     </div>

@@ -2,7 +2,7 @@ import { memo, useContext, useMemo } from 'react';
 import styles from './styles.module.scss';
 import { RangeSliderContext, RangeSliderContextType } from '../../context';
 
-interface TrackProps {
+export interface TrackProps {
   value1: number;
   value2: number;
 }
@@ -17,6 +17,7 @@ const Track = ({ value1, value2 }: TrackProps) => {
 
   return (
     <div
+      data-testid="track"
       className={track}
       style={{
         left: leftStyle,

@@ -62,6 +62,6 @@ export const useRangeSlider = ({ min = 0, max = 100, range }: UseRangeSliderProp
 
   return {
     state: { defaultMin, defaultMax, value1, value2, sliderRef, isDragging },
-    methods: { handleMouseDown, handleChangeValue },
+    methods: { handleMouseDown, handleChangeValue, handleMove },
   };
 };

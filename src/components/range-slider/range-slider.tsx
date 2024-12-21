@@ -17,13 +17,13 @@ const RangeSlider = ({ type = 'number', min, max, isEditable, range }: RangeSlid
 
   return (
     <RangeSliderContext.Provider value={{ type, min: defaultMin, max: defaultMax, isDragging }}>
-      <div className={`${sliderContainer} ${draggingClass}`}>
-        <div ref={sliderRef} className={slider}>
+      <div className={`${sliderContainer} ${draggingClass}`} data-testid="range-slider">
+        <div ref={sliderRef} className={slider} data-testid="slider">
           <Thumb value={value1} handleMouseDown={(e) => handleMouseDown({ e, index: 1 })} />
           <Thumb value={value2} handleMouseDown={(e) => handleMouseDown({ e, index: 2 })} />
           <Track value1={value1} value2={value2} />
         </div>
-        <div className={labelsContainer}>
+        <div className={labelsContainer} data-testid="labels">
           <RangeLabel
             value={value1}
             isEditable={!!isEditable}

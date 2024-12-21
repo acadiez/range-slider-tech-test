@@ -13,7 +13,7 @@ export const Exercise1View = () => {
   } = useExercise1View();
 
   return (
-    <div className={exercise1ViewContainer}>
+    <div className={exercise1ViewContainer} data-testid="exercise1-view">
       <h1>Exercise 1</h1>
       {(loading && <LoadingSpinner />) ||
         (data && <RangeSlider type="currency" min={data.min} max={data.max} isEditable />)}

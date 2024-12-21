@@ -2,7 +2,7 @@ import { memo, useContext, useMemo } from 'react';
 import styles from './styles.module.scss';
 import { RangeSliderContext, RangeSliderContextType } from '../../context';
 
-interface ThumbProps {
+export interface ThumbProps {
   value: number;
   handleMouseDown: (event: React.MouseEvent) => void;
 }
@@ -17,6 +17,7 @@ const Thumb = ({ value, handleMouseDown }: ThumbProps) => {
 
   return (
     <div
+      data-testid="thumb"
       className={thumb}
       style={{
         left: leftStyle,

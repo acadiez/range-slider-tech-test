@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
-interface UseHomeSectionProps {
+export interface UseHomeSectionProps {
   redirect: string;
 }
 
