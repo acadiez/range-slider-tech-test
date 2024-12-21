@@ -1,13 +1,17 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import Page from '../app/page'
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import Home from '../app/page';
 
-describe('Page', () => {
-  it('renders a heading', () => {
-    render(<Page />)
+const HOME_VIEW_TEST_ID = 'home-view';
 
-    const heading = screen.getByRole('heading', { level: 1 })
+jest.mock('@/views', () => ({
+  HomeView: () => <div data-testid={HOME_VIEW_TEST_ID} />,
+}));
 
-    expect(heading).toBeInTheDocument()
-  })
-})
+describe('Home Page', () => {
+  it('should render home view', () => {
+    render(<Home />);
+    const view = screen.getByTestId(HOME_VIEW_TEST_ID);
+    expect(view).toBeInTheDocument();
+  });
+});

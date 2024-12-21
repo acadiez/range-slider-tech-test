@@ -1,0 +1,16 @@
+.thumb {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 2px colors.$primary;
+  background-color: colors.$main-white;
+  border-radius: 50%;
+  top: -8px;
+  z-index: 2;
+
+  &:hover {
+    width: 24px;
+    height: 24px;
+    top: -10px;
+  }
+}
