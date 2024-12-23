@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useRangeSlider } from './use-range-slider';
-import { DEFAULT_DATA } from '@/views/exercise1-view/hooks/use-exercise1-view/constants';
-import { DEFAULT_RANGE } from '@/views/exercise2-view/hooks/use-exercise2-view/constants';
+import { DEFAULT_DATA } from '@/views/exercise1-view/constants';
+import { DEFAULT_RANGE } from '@/views/exercise2-view/constants';
 
 const setup = () => {
   const { result } = renderHook(() => useRangeSlider(DEFAULT_DATA));

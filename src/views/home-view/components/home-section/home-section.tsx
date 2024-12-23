@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useMemo } from 'react';
 import styles from './styles.module.scss';
 import { Button } from '@/ui';
