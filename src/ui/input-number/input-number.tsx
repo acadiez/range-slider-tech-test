@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.scss';
 import { debounce } from 'lodash';

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { RangeSliderProps } from './types';
 import { RangeSlider } from './range-slider';
-import { DEFAULT_RANGE } from '@/views/exercise2-view/hooks/use-exercise2-view/constants';
-import { DEFAULT_DATA } from '@/views/exercise1-view/hooks/use-exercise1-view/constants';
+import { DEFAULT_RANGE } from '@/views/exercise2-view/constants';
+import { DEFAULT_DATA } from '@/views/exercise1-view/constants';
 import { useRangeSlider } from './hooks';
 import { RangeLabelProps } from './components/range-label/types';
 import { ThumbProps } from './components/thumb/thumb';

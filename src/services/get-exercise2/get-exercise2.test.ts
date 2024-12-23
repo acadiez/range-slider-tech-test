@@ -1,7 +1,7 @@
 import { fetchData, EXERCISE_2 } from '@/api';
 import { getExercise2 } from './get-exercise2';
 import { Exercise2Data } from './types';
-import { DEFAULT_RANGE } from '@/views/exercise2-view/hooks/use-exercise2-view/constants';
+import { DEFAULT_RANGE } from '@/views/exercise2-view/constants';
 
 jest.mock('@/api', () => ({
   fetchData: jest.fn(),
