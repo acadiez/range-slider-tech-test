@@ -19,8 +19,17 @@ export const useRangeLabel = ({ isEditable, onChange }: UseRangeLabelProps) => {
     [onChange],
   );
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleEdit();
+      }
+    },
+    [handleEdit],
+  );
+
   return {
     state: { isEditing },
-    methods: { handleEdit, handleChange },
+    methods: { handleEdit, handleChange, handleKeyDown },
   };
 };

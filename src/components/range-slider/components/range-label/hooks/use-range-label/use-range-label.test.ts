@@ -47,4 +47,24 @@ describe('useRangeLabel hook', () => {
 
     expect(onChange).toHaveBeenCalledWith(value);
   });
+
+  it('should call handleEdit when handleKeyDown is called with Enter key', () => {
+    const { result } = setup(true);
+
+    act(() => {
+      result.current.methods.handleKeyDown({ key: 'Enter' } as React.KeyboardEvent);
+    });
+
+    expect(result.current.state.isEditing).toBe(true);
+  });
+
+  it('should not call handleEdit when handleKeyDown is called with a key other than Enter', () => {
+    const { result } = setup(true);
+
+    act(() => {
+      result.current.methods.handleKeyDown({ key: 'Space' } as React.KeyboardEvent);
+    });
+
+    expect(result.current.state.isEditing).toBe(false);
+  });
 });

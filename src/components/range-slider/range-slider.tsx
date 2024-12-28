@@ -11,7 +11,7 @@ const { sliderContainer, slider, dragging, labelsContainer } = styles;
 const RangeSlider = ({ type = 'number', min, max, isEditable, range }: RangeSliderProps) => {
   const {
     state: { defaultMin, defaultMax, value1, value2, sliderRef, isDragging },
-    methods: { handleMouseDown, handleChangeValue },
+    methods: { handleMouseDown, handleKeyDown, handleChangeValue },
   } = useRangeSlider({ min, max, range });
 
   const draggingClass = useMemo(() => (isDragging ? dragging : ''), [isDragging]);
@@ -20,8 +20,16 @@ const RangeSlider = ({ type = 'number', min, max, isEditable, range }: RangeSlid
     <RangeSliderContext.Provider value={{ type, min: defaultMin, max: defaultMax, isDragging }}>
       <div className={`${sliderContainer} ${draggingClass}`} data-testid="range-slider">
         <div ref={sliderRef} className={slider} data-testid="slider">
-          <Thumb value={value1} handleMouseDown={(e) => handleMouseDown({ e, index: 1 })} />
-          <Thumb value={value2} handleMouseDown={(e) => handleMouseDown({ e, index: 2 })} />
+          <Thumb
+            value={value1}
+            handleMouseDown={(e) => handleMouseDown({ e, index: 1 })}
+            handleKeyDown={(e) => handleKeyDown({ e, index: 1 })}
+          />
+          <Thumb
+            value={value2}
+            handleMouseDown={(e) => handleMouseDown({ e, index: 2 })}
+            handleKeyDown={(e) => handleKeyDown({ e, index: 2 })}
+          />
           <Track value1={value1} value2={value2} />
         </div>
         <div className={labelsContainer} data-testid="labels">

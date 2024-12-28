@@ -17,8 +17,13 @@ const THUMB_TEST_ID = 'thumb';
 const TRACK_TEST_ID = 'track';
 
 jest.mock('./components', () => ({
-  Thumb: ({ value, handleMouseDown }: ThumbProps) => (
-    <div data-testid={THUMB_TEST_ID} data-value={value} data-mousedown={handleMouseDown.toString()} />
+  Thumb: ({ value, handleMouseDown, handleKeyDown }: ThumbProps) => (
+    <div
+      data-testid={THUMB_TEST_ID}
+      data-value={value}
+      data-mousedown={handleMouseDown.toString()}
+      data-keydown={handleKeyDown.toString()}
+    />
   ),
   Track: ({ value1, value2 }: TrackProps) => (
     <div data-testid={TRACK_TEST_ID} data-value1={value1} data-value2={value2} />
@@ -30,7 +35,9 @@ jest.mock('./components', () => ({
       data-position={position}
       data-editable={isEditable}
       data-change={onChange?.toString()}
-    />
+    >
+      <input value={0} onChange={() => onChange} />
+    </div>
   ),
 }));
 
@@ -51,7 +58,12 @@ const setup = (data: RangeSliderProps, isDragging = false) => {
 
   (useRangeSlider as jest.Mock).mockReturnValue({
     state: { defaultMin, defaultMax, value1: defaultMin, value2: defaultMax, sliderRef: jest.fn(), isDragging },
-    methods: { handleMouseDown: jest.fn(), handleChangeValue: jest.fn() },
+    methods: {
+      handleMouseDown: jest.fn(),
+      handleKeyDown: jest.fn(),
+      handleChangeValue: jest.fn(),
+      handleMove: jest.fn(),
+    },
   });
 
   render(<RangeSlider {...data} />);
@@ -70,14 +82,19 @@ describe('RangeSlider component', () => {
 
     expect(container).toBeInTheDocument();
     expect(slider).toBeInTheDocument();
+
     expect(thumbs).toHaveLength(2);
     expect(thumbs[0]).toHaveAttribute('data-value', MOCK_DATA.min.toString());
     expect(thumbs[0].getAttribute('data-mousedown')).toContain('handleMouseDown');
+    expect(thumbs[0].getAttribute('data-keydown')).toContain('handleKeyDown');
     expect(thumbs[1]).toHaveAttribute('data-value', MOCK_DATA.max.toString());
     expect(thumbs[1].getAttribute('data-mousedown')).toContain('handleMouseDown');
+    expect(thumbs[1].getAttribute('data-keydown')).toContain('handleKeyDown');
+
     expect(track).toBeInTheDocument();
     expect(track).toHaveAttribute('data-value1', MOCK_DATA.min.toString());
     expect(track).toHaveAttribute('data-value2', MOCK_DATA.max.toString());
+
     expect(labelsContainer).toBeInTheDocument();
     expect(labels).toHaveLength(2);
     expect(labels[0]).toHaveAttribute('data-value', MOCK_DATA.min.toString());

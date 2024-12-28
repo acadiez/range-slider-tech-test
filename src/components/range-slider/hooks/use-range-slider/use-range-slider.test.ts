@@ -146,4 +146,50 @@ describe('useRangeSlider hook', () => {
       expect(result.current.state.isDragging).toBe(false);
     });
   });
+
+  describe('handleKeyDown', () => {
+    it('should update value on key down', () => {
+      const { result } = setup();
+
+      const event = {
+        key: 'ArrowRight',
+      } as unknown as React.KeyboardEvent;
+
+      act(() => {
+        result.current.methods.handleKeyDown({ e: event, index: 1 });
+      });
+
+      expect(result.current.state.value1).toBe(1);
+
+      event.key = 'ArrowLeft';
+
+      act(() => {
+        result.current.methods.handleKeyDown({ e: event, index: 1 });
+      });
+
+      expect(result.current.state.value1).toBe(0);
+    });
+
+    it('should update value on key down with range', () => {
+      const { result } = renderHook(() => useRangeSlider({ range: DEFAULT_RANGE }));
+
+      const event = {
+        key: 'ArrowRight',
+      } as unknown as React.KeyboardEvent;
+
+      act(() => {
+        result.current.methods.handleKeyDown({ e: event, index: 1 });
+      });
+
+      expect(result.current.state.value1).toBe(DEFAULT_RANGE[1]);
+
+      event.key = 'ArrowLeft';
+
+      act(() => {
+        result.current.methods.handleKeyDown({ e: event, index: 1 });
+      });
+
+      expect(result.current.state.value1).toBe(DEFAULT_RANGE[0]);
+    });
+  });
 });
