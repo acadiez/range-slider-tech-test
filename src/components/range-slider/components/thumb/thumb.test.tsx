@@ -5,6 +5,7 @@ import { Thumb, ThumbProps } from './thumb';
 const MOCK_DATA: ThumbProps = {
   value: 0,
   handleMouseDown: jest.fn(),
+  handleKeyDown: jest.fn(),
 };
 
 const MOCK_CONTEXT: RangeSliderContextType = {
@@ -49,5 +50,15 @@ describe('Thumb component', () => {
     fireEvent.mouseDown(thumb);
 
     expect(MOCK_DATA.handleMouseDown).toHaveBeenCalled();
+  });
+
+  it('calls handleKeyDown when thumb is focused and key is pressed', () => {
+    setup();
+
+    const thumb = screen.getByTestId('thumb');
+
+    fireEvent.keyDown(thumb, { key: 'Enter' });
+
+    expect(MOCK_DATA.handleKeyDown).toHaveBeenCalled();
   });
 });

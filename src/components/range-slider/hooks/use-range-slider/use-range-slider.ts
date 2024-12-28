@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { getRangeValue } from '../../helpers';
+import { findRangeIndex, getRangeValue } from '../../helpers';
 
 interface UseRangeSliderProps {
   min?: number;
@@ -60,8 +60,24 @@ export const useRangeSlider = ({ min = 0, max = 100, range }: UseRangeSliderProp
     [handleMove],
   );
 
+  const handleKeyDown = useCallback(
+    ({ e, index }: { e: React.KeyboardEvent; index: number }) => {
+      const value = index === 1 ? value1 : value2;
+
+      if (e.key === 'ArrowLeft') {
+        const newValueL = Array.isArray(range) ? range[findRangeIndex(value, range, 'decrease')] : value - 1;
+        handleChangeValue({ index, value: newValueL });
+      }
+      if (e.key === 'ArrowRight') {
+        const newValueR = Array.isArray(range) ? range[findRangeIndex(value, range, 'increase')] : value + 1;
+        handleChangeValue({ index, value: newValueR });
+      }
+    },
+    [handleChangeValue, value1, value2, range],
+  );
+
   return {
     state: { defaultMin, defaultMax, value1, value2, sliderRef, isDragging },
-    methods: { handleMouseDown, handleChangeValue, handleMove },
+    methods: { handleMouseDown, handleKeyDown, handleChangeValue, handleMove },
   };
 };

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { RangeSliderContext, RangeSliderContextType } from '../../context';
 import { RangeLabel } from './range-label';
 import { RangeLabelProps } from './types';
@@ -46,10 +46,11 @@ interface SetUpProps {
 const setup = ({ isEditable = MOCK_DATA.isEditable, isEditing = false, position = MOCK_DATA.position }: SetUpProps) => {
   const handleChange = jest.fn();
   const handleEdit = jest.fn();
+  const handleKeyDown = jest.fn();
 
   (useRangeLabel as jest.Mock).mockReturnValue({
     state: { isEditing },
-    methods: { handleChange, handleEdit },
+    methods: { handleChange, handleEdit, handleKeyDown },
   });
 
   render(
@@ -58,7 +59,7 @@ const setup = ({ isEditable = MOCK_DATA.isEditable, isEditing = false, position 
     </RangeSliderContext.Provider>,
   );
 
-  return { handleChange, handleEdit };
+  return { handleChange, handleEdit, handleKeyDown };
 };
 
 describe('RangeLabel component', () => {
@@ -86,7 +87,7 @@ describe('RangeLabel component', () => {
   });
 
   it('renders editable', () => {
-    const { handleEdit } = setup({ isEditable: true });
+    const { handleEdit, handleKeyDown } = setup({ isEditable: true });
 
     const rangeLabel = screen.getByTestId('range-label');
     const label = screen.getByRole('paragraph');
@@ -96,6 +97,10 @@ describe('RangeLabel component', () => {
     label.click();
 
     expect(handleEdit).toHaveBeenCalled();
+
+    fireEvent.keyDown(label, { key: 'Enter' });
+
+    expect(handleKeyDown).toHaveBeenCalled();
   });
 
   it('renders isEditing', () => {

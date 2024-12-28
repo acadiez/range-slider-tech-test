@@ -11,7 +11,7 @@ const { rangeLabelContainer } = styles;
 const RangeLabel = ({ value, isEditable, onChange, position = 'left' }: RangeLabelProps) => {
   const {
     state: { isEditing },
-    methods: { handleChange, handleEdit },
+    methods: { handleChange, handleEdit, handleKeyDown },
   } = useRangeLabel({ onChange, isEditable });
   const { type, max, min } = useContext(RangeSliderContext) as RangeSliderContextType;
 
@@ -28,7 +28,7 @@ const RangeLabel = ({ value, isEditable, onChange, position = 'left' }: RangeLab
       }}
     >
       {(!isEditing && (
-        <p onClick={handleEdit}>
+        <p tabIndex={!!isEditable ? 0 : undefined} onClick={handleEdit} onKeyDown={handleKeyDown}>
           {value}
           {rangeSliderTypes?.[type]}
         </p>
