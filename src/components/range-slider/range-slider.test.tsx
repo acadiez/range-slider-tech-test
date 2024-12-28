@@ -35,9 +35,7 @@ jest.mock('./components', () => ({
       data-position={position}
       data-editable={isEditable}
       data-change={onChange?.toString()}
-    >
-      <input value={0} onChange={() => onChange} />
-    </div>
+    />
   ),
 }));
 
